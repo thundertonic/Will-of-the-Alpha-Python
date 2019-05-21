@@ -1,3 +1,5 @@
+.gitignore
+
 # Created by https://www.gitignore.io/api/code,python
 # Edit at https://www.gitignore.io/?templates=code,python
 
@@ -134,3 +136,6 @@ dmypy.json
 .pyre/
 
 # End of https://www.gitignore.io/api/code,python
+
+# Test folders
+playground/
