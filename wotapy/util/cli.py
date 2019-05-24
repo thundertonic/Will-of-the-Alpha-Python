@@ -1,7 +1,9 @@
-from terminal_palette import Palette
 import re
 
+from terminal_palette import Palette
+
 pal = Palette()
+
 
 def print_error(text):
     print(pal.red.bold.bg_default('[X] ' + text))
@@ -15,16 +17,34 @@ def print_warning(text):
 def format_warning(text):
     return pal.black.bg_yellow.bold('[!] ' + text)
 
-def format_key(text):
+def print_action(text):
+    print(pal.green.bold('* ' + text))
+
+def format_action(text):
+    return pal.green.bold('* ' + text)
+
+def print_notice(text):
+    print(pal.bright_red.bold('* ' + text))
+
+def format_notice(text):
+    return pal.bright_red.bold('* ' + text)
+
+def key(text):
     return pal.black.bg_white.bold(' ' + text + ' ')
 
-def format_title(text):
+def title(text):
     return pal.yellow.bg_default.bold(text)
+
+def health(amnt):
+    return pal.red.bg_default('♥') * amnt
+
 
 # TODO moves this to a card class later on
 def print_card(name, health, total_health, damage, perk):
-    string = '[' + name + '] ' + pal.red.bg_default('♥') * health + pal.red.bg_default('♡') * (total_health - health) + '/' + pal.yellow.bg_default('✶') * damage + '\n' + pal.cyan.bg_default(perk)
+    string = '[' + name + '] ' + pal.red.bg_default('♥') * health + pal.red.bg_default('♡') * (
+                total_health - health) + '/' + pal.yellow.bg_default('✶') * damage + '\n' + pal.cyan.bg_default(perk)
     print(string)
+
 
 def prompt_int(prompt, coerse=False, min=None, max=None):
     """
@@ -39,9 +59,9 @@ def prompt_int(prompt, coerse=False, min=None, max=None):
     else:
         if type(max) is int:
             prompt += ' ' + pal.black.bg_white('[... - ' + str(max) + ']')
-        
+
     if not coerse:
-        prompt += ' or enter ' + format_key('..') + ' to cancel'
+        prompt += ' or enter ' + key('..') + ' to cancel'
 
     prompt += ': '
 
@@ -51,7 +71,7 @@ def prompt_int(prompt, coerse=False, min=None, max=None):
 
         if answer == '..' and not coerse:
             return None
-        
+
         try:
             answer = int(answer)
             if type(min) is int and int(answer) < min:
@@ -62,6 +82,7 @@ def prompt_int(prompt, coerse=False, min=None, max=None):
                 return answer
         except ValueError:
             print_error('You must enter a valid integer')
+
 
 def prompt_float(prompt, coerse=False, min=None, max=None):
     """
@@ -76,9 +97,9 @@ def prompt_float(prompt, coerse=False, min=None, max=None):
     else:
         if type(max) is int:
             prompt += ' ' + pal.black.bg_white('[... - ' + str(max) + ']')
-        
+
     if not coerse:
-        prompt += ' or enter ' + format_key('..') + ' to cancel'
+        prompt += ' or enter ' + key('..') + ' to cancel'
 
     prompt += ': '
 
@@ -100,6 +121,7 @@ def prompt_float(prompt, coerse=False, min=None, max=None):
         except ValueError:
             print_error('You must enter a valid integer')
 
+
 def prompt_string(prompt: str, coerse=False, blacklist_word=None, black_patt=None, white_patt=None):
     """
     Prompts the user for a string input with the given prompt.
@@ -107,7 +129,7 @@ def prompt_string(prompt: str, coerse=False, blacklist_word=None, black_patt=Non
     `blacklist_word` is not case-sensitive.
     """
     if not coerse:
-        prompt += ' or enter ' + format_key('..') + ' to cancel'
+        prompt += ' or enter ' + key('..') + ' to cancel'
 
     while True:
         forbids = False
@@ -115,14 +137,14 @@ def prompt_string(prompt: str, coerse=False, blacklist_word=None, black_patt=Non
 
         if answer == '..' and not coerse:
             return None
-        
+
         # check user input for blacklist pattern
         if black_patt is not None:
             # if the blacklist pattern is found
             if re.match(black_patt, answer) is not None:
                 print_error(answer + ' may not be used as a response.')
                 continue
-        
+
         # check user input for blacklist pattern
         if white_patt is not None:
             # if the whitelist pattern is not found
@@ -137,17 +159,18 @@ def prompt_string(prompt: str, coerse=False, blacklist_word=None, black_patt=Non
             for w in blacklist_word:
                 # make forbidden word case-insensitive
                 w = w.lower()
-                
+
                 if w in lower_ans:
                     print_error('You may not use the word \'' + w + '\'!')
                     forbids = True
                     break
-            
+
             # if a improper answer is found
             if forbids is True:
-                continue      
+                continue
 
         return answer
+
 
 def prompt_choice(prompt, coerse=False, *menu_items):
     """
@@ -156,11 +179,11 @@ def prompt_choice(prompt, coerse=False, *menu_items):
     """
     # Construct the message
     if not coerse:
-        prompt += '\nEnter ' + format_key('..') + ' to cancel'
-    
+        prompt += '\nEnter ' + key('..') + ' to cancel'
+
     for i in range(len(menu_items)):
-        prompt += '\n' + format_key(str(i + 1)) + ' ' + menu_items[i]
-    
+        prompt += '\n' + key(str(i + 1)) + ' ' + menu_items[i]
+
     prompt += '\nSelect via number: '
 
     # Coerce loop  

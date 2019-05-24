@@ -4,17 +4,19 @@ from terminal_palette import Palette
 
 pal = Palette()
 
+
 class Symbol:
     """
     # Symbol
     An object that encapsulates properties of a symbol with color and decorator.
     """
-    def __init__ (self, char, fg='default', bg='default', *decos):
+
+    def __init__(self, char, fg='default', bg='default', *decos):
         self.char = char
         self.fg = fg
         self.bg = bg
         self.decos = decos
-    
+
     def get(self, char=None, fg=None, bg=None, *decos):
         """
         Returns the symbol as a formatted string. Any properties passed as arguments will override the ones from this symbol.
