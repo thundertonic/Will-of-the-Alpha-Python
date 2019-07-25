@@ -38,12 +38,15 @@ def title(text):
 def health(amnt):
     return pal.red.bg_default('♥') * amnt
 
+def attack(amnt):
+    return pal.magenta.bg_default('')
 
 # TODO moves this to a card class later on
 def print_card(name, health, total_health, damage, perk):
     string = '[' + name + '] ' + pal.red.bg_default('♥') * health + pal.red.bg_default('♡') * (
                 total_health - health) + '/' + pal.yellow.bg_default('✶') * damage + '\n' + pal.cyan.bg_default(perk)
     print(string)
+    print()
 
 
 def prompt_int(prompt, coerse=False, min=None, max=None):
@@ -70,6 +73,7 @@ def prompt_int(prompt, coerse=False, min=None, max=None):
         answer = input(prompt)
 
         if answer == '..' and not coerse:
+            print()
             return None
 
         try:
@@ -79,6 +83,7 @@ def prompt_int(prompt, coerse=False, min=None, max=None):
             elif type(max) is int and int(answer) > max:
                 print_error('Your value must be less than ' + str(max))
             else:
+                print()
                 return answer
         except ValueError:
             print_error('You must enter a valid integer')
@@ -108,6 +113,7 @@ def prompt_float(prompt, coerse=False, min=None, max=None):
         answer = input(prompt)
 
         if answer == '..' and not coerse:
+            print()
             return None
 
         try:
@@ -136,6 +142,7 @@ def prompt_string(prompt: str, coerse=False, blacklist_word=None, black_patt=Non
         answer = input(prompt)
 
         if answer == '..' and not coerse:
+            print()
             return None
 
         # check user input for blacklist pattern
@@ -169,10 +176,11 @@ def prompt_string(prompt: str, coerse=False, blacklist_word=None, black_patt=Non
             if forbids is True:
                 continue
 
+        print()
         return answer
 
 
-def prompt_choice(prompt, coerse=False, *menu_items):
+def prompt_choice(prompt: str, coerse=False, *menu_items: str):
     """
     Prompts the user for an int input with the given prompt and item list.
     If `coerse = True`, forces the user to enter a input without an exit option
@@ -199,6 +207,39 @@ def prompt_choice(prompt, coerse=False, *menu_items):
                 print_error('This is not a valid number for a menu item')
                 continue
 
+            return menu_items[answer - 1]
+        except ValueError:
+            print_error('Please type in the number of the item you wish to select')
+
+def prompt_choice_tree(prompt: str, coerse=False, *menu_items: tuple):
+    """
+    Prompts the user for an int input with the given prompt and item list.
+    If `coerse = True`, forces the user to enter a input without an exit option.
+    The menu_items are tuples in the format of (str, lambda)
+    """
+    # Construct the message
+    if not coerse:
+        prompt += '\nEnter ' + key('..') + ' to cancel'
+
+    for i in range(len(menu_items)):
+        prompt += '\n' + key(str(i + 1)) + ' ' + menu_items[i][0] # 0 is the str
+
+    prompt += '\nSelect via number: '
+
+    # Coerce loop  
+    while True:
+        answer = input(prompt)
+
+        if answer == '..' and not coerse:
+            return None
+
+        try:
+            answer = int(answer)
+            if answer <= 0 or answer > len(menu_items):
+                print_error('This is not a valid number for a menu item')
+                continue
+
+            menu_items[answer - 1][1]() # run the lambda
             return menu_items[answer - 1]
         except ValueError:
             print_error('Please type in the number of the item you wish to select')

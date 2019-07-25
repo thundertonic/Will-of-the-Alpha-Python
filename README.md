@@ -1,1 +1,1 @@
-# Will-of-the-Alpha-Python
+# Will of the Alpha (Python)

@@ -1,7 +1,7 @@
-from wotapy.card.char_card import CharCard
+from wotapy.card.character import Character
 import wotapy.util.cli as cli
 
-# a lambda function that does nothing. Fits the format of (subject, strength_max)
+# a const lambda function that does nothing. Fits the format of (subject, strength_max)
 NO_ACT = lambda su, st: None
 
 # used to display strength
@@ -24,7 +24,7 @@ class Ability:
         self.strength_max = strength_max
 
     def do (self, subject, object, strength):
-        """Committ the ability with a given strength"""
+        """Commit the ability with a given strength"""
         strength_max = self.strength_max
 
         if strength > strength_max:
@@ -45,4 +45,3 @@ def heal(subject, strength):
         print('Healing did not do anything upon ' + subject.name + ' as they cannot be healed!')
 
 HEAL = Ability(heal, lambda st, su: None, 'Heal', 'Heals', strength_max=8)
-

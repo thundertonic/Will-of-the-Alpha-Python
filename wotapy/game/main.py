@@ -3,9 +3,11 @@ import sys
 from terminal_palette import Palette
 
 from wotapy.util import cli
+from wotapy.game.dialogues import intro
 
 def main():
 
+    # initialize the terminal_palette module
     pal = Palette()
 
     print('----------------',
@@ -16,24 +18,16 @@ def main():
         )
 
     game_state = {}
-    print()
-    cli.print_card('Will of the Alpha', 5, 12, 2, 'On Summon: The ultimate game begins...')
-    print()
-
 
     def new_game():
         """Create a new game. Populate the game_state dictionary."""
         game_state['name'] = cli.prompt_string('Name your save: ', coerse=True)
-        cli.print_warning('Currently, you may only play a random given set of cards.')
+        
+        intro.begin()
 
-
-    choice = cli.prompt_choice(cli.title('Main Menu'), True, 'New Game', 'Exit')
-
-    # a function dictionary for the main menu
-    run_dict = {
-        'New Game': lambda: new_game(),
-        'Exit': lambda: sys.exit(0)
-    }
-
-    # run such dict
-    run_dict[choice]()
+    cli.prompt_choice_tree(
+        cli.title('Main Menu'),
+        True,
+        ('New Game', lambda: new_game()),
+        ('Exit', lambda: sys.exit(0))
+    )
