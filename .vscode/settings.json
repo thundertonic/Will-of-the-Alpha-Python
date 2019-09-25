@@ -1,10 +1,16 @@
 {
-  "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.7/bin/python3",
+  "python.pythonPath": "/usr/local/bin/python3",
   "python.linting.pylintEnabled": true,
   "files.exclude": {
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
-  }
+  },
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.nosetestsEnabled": false,
+  "python.testing.pytestEnabled": true
 }

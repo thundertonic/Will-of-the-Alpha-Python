@@ -4,5 +4,5 @@ class Traveller:
     def __init__(self, at: Place):
         self.at = at
     
-    def list():
+    def list(self):
         pass #TODO

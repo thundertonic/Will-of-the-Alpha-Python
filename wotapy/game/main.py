@@ -1,33 +1,26 @@
-import sys
+from wotapy.util.palette import palette
+from wotapy.objects.actor import Actor
+from wotapy.objects.place import Place, viewport
+from wotapy.objects.property import Property
+from wotapy.objects.signal import Signal
 
-from terminal_palette import Palette
-
-from wotapy.util import cli
-from wotapy.game.dialogues import intro
+from wotapy.core.damagable import Damagable, SAssault
+from wotapy.core.move import Actable, SActEnded
 
 def main():
+    # place = empty_room((28, 15))
+    # nomad = Actor('nomad', (5, 8), properties=[Damagable(health=12)], tags=['wild'])
+    # place.spawn(nomad)
+    # place.spawn()
+    # illu = place.illustrate()
+    # vp = viewport(illu)
+    # print(vp)
 
-    # initialize the terminal_palette module
-    pal = Palette()
+    # nomad.signal(SAssault(dmg=15))
+    # # update the world
+    # place.signal(SActEnded())
 
-    print('----------------',
-        pal.bright_magenta('Will of the Alpha'),
-        pal.bg_cyan.black('Created with ❤️ by Veloce Wattwing ⚡🐉⚡'),
-        '----------------',
-        sep='\n'
-        )
-
-    game_state = {}
-
-    def new_game():
-        """Create a new game. Populate the game_state dictionary."""
-        game_state['name'] = cli.prompt_string('Name your save: ', coerse=True)
-        
-        intro.begin()
-
-    cli.prompt_choice_tree(
-        cli.title('Main Menu'),
-        True,
-        ('New Game', lambda: new_game()),
-        ('Exit', lambda: sys.exit(0))
-    )
+    # illu = place.illustrate()
+    # vp = viewport(illu)
+    # print(vp)
+    pass

@@ -1,0 +1,1 @@
+import wotapy.game.main as main

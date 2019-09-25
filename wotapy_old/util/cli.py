@@ -1,9 +1,12 @@
 import re
 
 from terminal_palette import Palette
+import wotapy.game.main as main
+pal = main.pal
 
-pal = Palette()
-
+def log(*text):
+    for t in text:
+        print(t)
 
 def print_error(text):
     print(pal.red.bold.bg_default('[X] ' + text))

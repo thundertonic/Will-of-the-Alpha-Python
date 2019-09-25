@@ -4,6 +4,9 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+  
+  
+
     {
       "name": "Current Python File",
       "type": "python",
@@ -13,11 +16,19 @@
     },
 
     {
-      "name": "Main Python",
+      "name": "Current Python File (External Terminal)",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "externalTerminal"
+    },
+
+    {
+      "name": "Run Will of the Alpha",
       "type": "python",
       "request": "launch",
       "program": "${workspaceRoot}/main.py",
       "console": "integratedTerminal"
-    }
+    },
   ]
 }
